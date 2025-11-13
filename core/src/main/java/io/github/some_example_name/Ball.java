@@ -19,7 +19,7 @@ public class Ball {
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
     }
-    public void update(Paddle paddle) {
+    public void update() {
         x += xSpeed;
         y += ySpeed;
         if (x < size || x > Gdx.graphics.getWidth() -size) {
@@ -28,14 +28,13 @@ public class Ball {
         if (y < size || y > Gdx.graphics.getHeight() -size) {
             ySpeed = -ySpeed;
         }
-        checkCollision(paddle);
     }
     public void draw(ShapeRenderer shape) {
         shape.setColor(color);
         shape.circle(x, y, size);
     }
-    public void checkCollision(Paddle paddle) {
-        if(collidesWith(paddle)){
+    public void checkCollisionPaddle(Paddle paddle) {
+        if(collidesWithPaddle(paddle)){
             ySpeed = -ySpeed;
             color = Color.PURPLE;
         }
@@ -43,9 +42,20 @@ public class Ball {
             color = Color.WHITE;
         }
     }
-    private boolean collidesWith(Paddle paddle) {
-        return x + size >= paddle.x && x - size <= paddle.x + paddle.width && y + size >= paddle.y && y - size <= paddle.y + paddle.height;
 
+    public void checkCollisionBlock(Block block) {
+        if (collidesWithBlock(block)) {
+            ySpeed = -ySpeed;
+            color = Color.RED;
+        }
+    }
 
+    private boolean collidesWithPaddle(Paddle paddle) {
+        return (x + size >= paddle.x && x - size <= paddle.x + paddle.width &&
+            y + size >= paddle.y && y - size <= paddle.y + paddle.height);
+    }
+    private boolean collidesWithBlock(Block block) {
+        return x + size >= block.x && x - size <= block.x + block.width &&
+            y + size >= block.y && y - size <= block.y + block.height;
     }
 }

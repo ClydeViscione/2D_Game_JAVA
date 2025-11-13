@@ -2,6 +2,7 @@ package io.github.some_example_name;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+
 public class Block {
     int x,y,width,height;
     public Block(int x, int y, int width, int height) {

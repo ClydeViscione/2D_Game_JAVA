@@ -1,4 +1,5 @@
 package io.github.some_example_name;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -14,7 +15,7 @@ public class Main extends ApplicationAdapter {
     @Override
     public void create () {
         shape = new ShapeRenderer();
-        ball = new Ball(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 30 , 5, 5 );
+        ball = new Ball(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 15 , 5, 5 );
         paddle = new Paddle(250, 50);
         int blockWidth = 63;
         int blockHeight = 20;
@@ -28,7 +29,11 @@ public class Main extends ApplicationAdapter {
     @Override
     public void render() {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        ball.update(paddle);
+        ball.update();
+        ball.checkCollisionPaddle(paddle);
+        for (Block b : blocks) {
+            ball.checkCollisionBlock(b);
+        }
         paddle.update();
         shape.begin(ShapeRenderer.ShapeType.Filled);
         ball.draw(shape);
