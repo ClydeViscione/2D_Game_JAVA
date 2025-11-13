@@ -47,6 +47,7 @@ public class Ball {
         if (collidesWithBlock(block)) {
             ySpeed = -ySpeed;
             color = Color.RED;
+            block.destroyed = true;
         }
     }
 

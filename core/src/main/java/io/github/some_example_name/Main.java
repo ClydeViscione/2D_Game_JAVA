@@ -34,6 +34,12 @@ public class Main extends ApplicationAdapter {
         for (Block b : blocks) {
             ball.checkCollisionBlock(b);
         }
+        for (int i = 0; i < blocks.size(); i++) {
+            if (blocks.get(i).destroyed) {
+                blocks.remove(i);
+                i--;
+            }
+        }
         paddle.update();
         shape.begin(ShapeRenderer.ShapeType.Filled);
         ball.draw(shape);
