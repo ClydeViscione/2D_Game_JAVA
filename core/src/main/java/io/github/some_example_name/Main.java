@@ -48,15 +48,20 @@ public class Main extends ApplicationAdapter {
                 i--;
             }
         }
-        if (ball.y - ball.size <= 0) {
+        if (blocks.isEmpty()) {
             batch.begin();
-            font.draw(batch, "GAME OVER", Gdx.graphics.getWidth() / 2f - 50, Gdx.graphics.getHeight() / 2f);
+            font.draw(batch, "YOU WIN!",
+                Gdx.graphics.getWidth() / 2f - 40,
+                Gdx.graphics.getHeight() / 2f);
             batch.end();
             return;
         }
-        if (blocks.isEmpty()) {
+
+        if (ball.y - ball.size <= 0) {
             batch.begin();
-            font.draw(batch, "YOU WIN!", Gdx.graphics.getWidth() / 2f - 40, Gdx.graphics.getHeight() / 2f);
+            font.draw(batch, "GAME OVER",
+                Gdx.graphics.getWidth() / 2f - 50,
+                Gdx.graphics.getHeight() / 2f);
             batch.end();
             return;
         }
