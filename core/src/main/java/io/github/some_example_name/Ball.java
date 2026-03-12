@@ -32,11 +32,16 @@ public class Ball {
             ySpeed = -ySpeed;
         }
     }
-    public void checkCollisionBlock(Block block) {
-        if (x + size >= block.x && x - size <= block.x + block.width &&
-            y + size >= block.y && y - size <= block.y + block.height) {
-            ySpeed = -ySpeed;
-            block.destroyed = true; // détruit le bloc touché
+    public void checkCollisionBlock(Block block, Paddle paddle) {
+    if (x + size >= block.x && x - size <= block.x + block.width &&
+        y + size >= block.y && y - size <= block.y + block.height) {
+
+        ySpeed = -ySpeed;
+        block.destroyed = true;
+
+            if(block instanceof AugmentePaddleBlock) {
+                ((AugmentePaddleBlock) block).applyEffect(paddle);
+            }
         }
     }
 }

@@ -73,8 +73,8 @@ public class Main extends ApplicationAdapter {
         ball.checkCollisionPaddle(paddle);
 
         for (Block b : blocks) {
-            ball.checkCollisionBlock(b);
-        }
+    ball.checkCollisionBlock(b, paddle);
+}
 
         for (int i = 0; i < blocks.size(); i++) {
             if (blocks.get(i).destroyed) {

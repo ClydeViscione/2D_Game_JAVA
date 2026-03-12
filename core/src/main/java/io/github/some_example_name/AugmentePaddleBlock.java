@@ -9,7 +9,16 @@ public class AugmentePaddleBlock extends Block {
         super(x, y, width, height);
         this.color = Color.RED;
     }
+
     public void draw(ShapeRenderer shape) {
         super.draw(shape);
+    }
+
+    public void applyEffect(Paddle paddle) {
+        paddle.width += 50;
+
+        if (paddle.width > com.badlogic.gdx.Gdx.graphics.getWidth()) {
+            paddle.width = com.badlogic.gdx.Gdx.graphics.getWidth();
+        }
     }
 }
