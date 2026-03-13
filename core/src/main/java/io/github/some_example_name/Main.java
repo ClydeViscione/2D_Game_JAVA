@@ -55,12 +55,20 @@ public class Main extends ApplicationAdapter {
         Block blueBlock = blocks.get(blueIndex);
         blocks.set(blueIndex, new DoubleBallBlock(blueBlock.x, blueBlock.y, blueBlock.width, blueBlock.height));
 
-        int grayIndex;
-        do {
-            grayIndex = random.nextInt(blocks.size());
-        } while (grayIndex == redIndex || grayIndex == yellowIndex || grayIndex == blueIndex);
-        Block grayBlock = blocks.get(grayIndex);
-        blocks.set(grayIndex, new ResistantBlock(grayBlock.x, grayBlock.y, grayBlock.width, grayBlock.height));
+        for (int i = 0; i < 5; i++) {
+
+    int grayIndex;
+    do {
+        grayIndex = random.nextInt(blocks.size());
+    } while (blocks.get(grayIndex) instanceof AugmentePaddleBlock ||
+             blocks.get(grayIndex) instanceof SmallBallBlock ||
+             blocks.get(grayIndex) instanceof DoubleBallBlock ||
+             blocks.get(grayIndex) instanceof ResistantBlock);
+
+    Block grayBlock = blocks.get(grayIndex);
+    blocks.set(grayIndex,
+        new ResistantBlock(grayBlock.x, grayBlock.y, grayBlock.width, grayBlock.height));
+}
     }
 
     @Override
