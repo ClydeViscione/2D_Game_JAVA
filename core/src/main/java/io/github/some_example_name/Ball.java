@@ -33,13 +33,26 @@ public class Ball {
         }
     }
     public void checkCollisionBlock(Block block, Paddle paddle) {
-    if (x + size >= block.x && x - size <= block.x + block.width &&
-        y + size >= block.y && y - size <= block.y + block.height) {
 
-        ySpeed = -ySpeed;
-        block.destroyed = true;
+        if (x + size >= block.x && x - size <= block.x + block.width &&
+            y + size >= block.y && y - size <= block.y + block.height) {
 
-            if(block instanceof AugmentePaddleBlock) {
+            ySpeed = -ySpeed;
+
+            if (block instanceof ResistantBlock) {
+
+                ResistantBlock rb = (ResistantBlock) block;
+                rb.health--;
+
+                if (rb.health <= 0) {
+                    block.destroyed = true;
+                }
+
+            } else {
+                block.destroyed = true;
+            }
+
+            if (block instanceof AugmentePaddleBlock) {
                 ((AugmentePaddleBlock) block).applyEffect(paddle);
             }
         }
