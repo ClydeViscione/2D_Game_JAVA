@@ -3,6 +3,7 @@ package io.github.some_example_name;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class BallTest{
 
     Ball ball;
@@ -17,7 +18,7 @@ class BallTest{
         ball = new Ball(300, 300, 5,150, 40);
     }
 
-    @Test
+    @Test @Order(1)
     void checkCollisionBlock_detruit(){
         Block block = new Block(xPosition, yPosition, 150, 40);
         ball.x = xPosition;
@@ -26,7 +27,7 @@ class BallTest{
         assertTrue(block.destroyed);
     }
 
-    @Test
+    @Test @Order(2)
     void checkCollisionResistantBlock(){
         ResistantBlock block = new ResistantBlock(xPosition, yPosition, 150, 40);
         ball.x = xPosition;
@@ -46,7 +47,7 @@ class BallTest{
         }
     }
 
-    @Test
+    @Test @Order(3)
     void checkCollisionAugmentePaddleBlock(){
         AugmentePaddleBlock block = new AugmentePaddleBlock(xPosition, yPosition, 150, 75);
         ball.x = xPosition;
