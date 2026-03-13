@@ -55,6 +55,11 @@ public class Ball {
             if (block instanceof AugmentePaddleBlock) {
                 ((AugmentePaddleBlock) block).applyEffect(paddle);
             }
+
+            if (block instanceof SmallBallBlock) {
+                ((SmallBallBlock) block).applyEffect(this);
+            }
+
         }
     }
 }
