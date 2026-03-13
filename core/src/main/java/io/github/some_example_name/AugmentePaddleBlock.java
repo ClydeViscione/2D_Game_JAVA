@@ -14,11 +14,11 @@ public class AugmentePaddleBlock extends Block {
         super.draw(shape);
     }
 
-    public void applyEffect(Paddle paddle) {
+    public void applyEffect(Paddle paddle, int maxWidth) {
         paddle.width += 50;
 
-        if (paddle.width > com.badlogic.gdx.Gdx.graphics.getWidth()) {
-            paddle.width = com.badlogic.gdx.Gdx.graphics.getWidth();
+        if (paddle.width > maxWidth) {
+            paddle.width = maxWidth;
         }
     }
 }

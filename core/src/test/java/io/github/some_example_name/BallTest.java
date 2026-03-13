@@ -11,7 +11,6 @@ class BallTest{
     int xPosition = 1;
     int yPosition = 1;
 
-
     @BeforeEach
     void initialize(){
         paddle = new Paddle(4,4);
@@ -23,7 +22,7 @@ class BallTest{
         Block block = new Block(xPosition, yPosition, 150, 40);
         ball.x = xPosition;
         ball.y = yPosition;
-        ball.checkCollisionBlock(block, paddle);
+        ball.checkCollisionBlock(block, paddle,800);
         assertTrue(block.destroyed);
     }
 
@@ -32,19 +31,27 @@ class BallTest{
         ResistantBlock block = new ResistantBlock(xPosition, yPosition, 150, 40);
         ball.x = xPosition;
         ball.y = yPosition;
-        ball.checkCollisionBlock(block, paddle);
+        ball.checkCollisionBlock(block, paddle, 800);
         if(block.health ==1){
             ball.x = 300;
             ball.y = 300;
             ball.x = xPosition;
             ball.y = yPosition;
 
-            ball.checkCollisionBlock(block, paddle);
+            ball.checkCollisionBlock(block, paddle, 800);
             assertTrue(block.destroyed);
         }
         else{
             fail("Aucun pv à été enlever");
         }
+    }
 
+    @Test
+    void checkCollisionAugmentePaddleBlock(){
+        AugmentePaddleBlock block = new AugmentePaddleBlock(xPosition, yPosition, 150, 75);
+        ball.x = xPosition;
+        ball.y = yPosition;
+        ball.checkCollisionBlock(block, paddle, 800);
+        assertTrue(paddle.width != 100);
     }
     }

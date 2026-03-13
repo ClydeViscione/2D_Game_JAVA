@@ -81,7 +81,7 @@ public class Main extends ApplicationAdapter {
         ball.checkCollisionPaddle(paddle);
 
         for (Block b : blocks) {
-    ball.checkCollisionBlock(b, paddle);
+    ball.checkCollisionBlock(b, paddle, com.badlogic.gdx.Gdx.graphics.getWidth());
 }
 
         for (int i = 0; i < blocks.size(); i++) {
