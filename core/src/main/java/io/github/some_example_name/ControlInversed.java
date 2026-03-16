@@ -1,7 +1,7 @@
 package io.github.some_example_name;
 
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class ControlInversed extends Block {
 
@@ -10,12 +10,11 @@ public class ControlInversed extends Block {
         this.color = Color.BLUE;
     }
 
-    @Override
-    public void draw(ShapeRenderer shape) {
-        super.draw(shape);
+    public void applyEffect(Paddle paddle) {
+        paddle.applyInvertedEffect(7f);
     }
 
-    public void applyEffect(Paddle paddle) {
-        paddle.inverted = true;
+    public void draw(ShapeRenderer shape) {
+        super.draw(shape);
     }
 }

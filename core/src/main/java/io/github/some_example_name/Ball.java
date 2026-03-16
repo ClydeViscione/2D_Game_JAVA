@@ -9,10 +9,14 @@ public class Ball {
     public int xSpeed, ySpeed;
     public Color color = Color.GREEN;
 
+    private int normalSize;
+    public float sizeTimer = 0f;
+
     public Ball(int x, int y, int size, int xSpeed, int ySpeed) {
         this.x = x;
         this.y = y;
         this.size = size;
+        this.normalSize = size;
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
     }
@@ -20,8 +24,16 @@ public class Ball {
     public void update() {
         x += xSpeed;
         y += ySpeed;
+
         if (x < size || x > Gdx.graphics.getWidth() - size) xSpeed = -xSpeed;
         if (y > Gdx.graphics.getHeight() - size) ySpeed = -ySpeed;
+
+        if (sizeTimer > 0) {
+            sizeTimer -= Gdx.graphics.getDeltaTime();
+            if (sizeTimer <= 0) {
+                size = normalSize;
+            }
+        }
     }
 
     public void draw(ShapeRenderer shape) {
@@ -36,30 +48,31 @@ public class Ball {
         }
     }
 
-    public void checkCollisionBlock(Block block, Paddle paddle) {
+    public void applySmallEffect(float duration) {
+        size = Math.max(5, normalSize - 5);
+        sizeTimer = duration;
+    }
 
+    public void checkCollisionBlock(Block block, Paddle paddle) {
         if (x + size >= block.x && x - size <= block.x + block.width &&
             y + size >= block.y && y - size <= block.y + block.height) {
 
             ySpeed = -ySpeed;
 
-            // ResistantBlock
             if (block instanceof ResistantBlock) {
                 ResistantBlock rb = (ResistantBlock) block;
                 rb.health--;
                 if (rb.health <= 0) block.destroyed = true;
-
             } else {
                 block.destroyed = true;
             }
 
-            // Power-ups
             if (block instanceof AugmentePaddleBlock) {
                 ((AugmentePaddleBlock) block).applyEffect(paddle);
             }
 
             if (block instanceof SmallBallBlock) {
-                ((SmallBallBlock) block).applyEffect(this);
+                applySmallEffect(7f);
             }
 
             if (block instanceof ControlInversed) {
