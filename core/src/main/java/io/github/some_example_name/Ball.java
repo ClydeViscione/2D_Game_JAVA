@@ -53,7 +53,7 @@ public class Ball {
         sizeTimer = duration;
     }
 
-    public void checkCollisionBlock(Block block, Paddle paddle) {
+    public void checkCollisionBlock(Block block, Paddle paddle, int widthGraphics ) {
         if (x + size >= block.x && x - size <= block.x + block.width &&
             y + size >= block.y && y - size <= block.y + block.height) {
 
@@ -68,7 +68,7 @@ public class Ball {
             }
 
             if (block instanceof AugmentePaddleBlock) {
-                ((AugmentePaddleBlock) block).applyEffect(paddle);
+                ((AugmentePaddleBlock) block).applyEffect(paddle,  widthGraphics);
             }
 
             if (block instanceof SmallBallBlock) {
