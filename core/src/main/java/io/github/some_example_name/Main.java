@@ -16,6 +16,7 @@ public class Main extends ApplicationAdapter {
     Ball ball;
     Paddle paddle;
     ArrayList<Block> blocks;
+    private boolean gameStarted = false;
 
     @Override
     public void create() {
@@ -24,7 +25,6 @@ public class Main extends ApplicationAdapter {
         font = new BitmapFont();
         ball = new Ball(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, 15, 3, 5);
         paddle = new Paddle(250, 50);
-
         blocks = new ArrayList<>();
         int blockWidth = 63;
         int blockHeight = 20;
@@ -53,28 +53,37 @@ public class Main extends ApplicationAdapter {
             blueIndex = random.nextInt(blocks.size());
         } while (blueIndex == redIndex || blueIndex == yellowIndex);
         Block blueBlock = blocks.get(blueIndex);
-        blocks.set(blueIndex, new DoubleBallBlock(blueBlock.x, blueBlock.y, blueBlock.width, blueBlock.height));
+        blocks.set(blueIndex, new ControlInversed(blueBlock.x, blueBlock.y, blueBlock.width, blueBlock.height));
 
         for (int i = 0; i < 5; i++) {
+            int grayIndex;
+            do {
+                grayIndex = random.nextInt(blocks.size());
+            } while (blocks.get(grayIndex) instanceof AugmentePaddleBlock ||
+                     blocks.get(grayIndex) instanceof SmallBallBlock ||
+                     blocks.get(grayIndex) instanceof ControlInversed ||
+                     blocks.get(grayIndex) instanceof ResistantBlock);
 
-    int grayIndex;
-    do {
-        grayIndex = random.nextInt(blocks.size());
-    } while (blocks.get(grayIndex) instanceof AugmentePaddleBlock ||
-             blocks.get(grayIndex) instanceof SmallBallBlock ||
-             blocks.get(grayIndex) instanceof DoubleBallBlock ||
-             blocks.get(grayIndex) instanceof ResistantBlock);
-
-    Block grayBlock = blocks.get(grayIndex);
-    blocks.set(grayIndex,
-        new ResistantBlock(grayBlock.x, grayBlock.y, grayBlock.width, grayBlock.height));
-}
+            Block grayBlock = blocks.get(grayIndex);
+            blocks.set(grayIndex, new ResistantBlock(grayBlock.x, grayBlock.y, grayBlock.width, grayBlock.height));
+        }
     }
 
     @Override
     public void render() {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        if (!gameStarted) {
+            if (Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.SPACE)) {
+                gameStarted = true;
+            } else {
+                batch.begin();
+                font.draw(batch, "PRESS SPACE TO START", Gdx.graphics.getWidth()/2f-100, Gdx.graphics.getHeight()/2f);
+                batch.end();
+                return;
+            }
+        }
 
         ball.update();
         paddle.update();
@@ -93,16 +102,20 @@ public class Main extends ApplicationAdapter {
 
         if (blocks.isEmpty()) {
             batch.begin();
-            font.draw(batch, "YOU WIN!", Gdx.graphics.getWidth() / 2f - 40, Gdx.graphics.getHeight() / 2f);
+            font.draw(batch, "YOU WIN!", Gdx.graphics.getWidth()/2f-40, Gdx.graphics.getHeight()/2f);
             batch.end();
             return;
         }
 
-
         if (ball.y - ball.size <= 0) {
             batch.begin();
-            font.draw(batch, "GAME OVER", Gdx.graphics.getWidth() / 2f - 50, Gdx.graphics.getHeight() / 2f);
+            font.draw(batch, "GAME OVER - PRESS SPACE TO RESTART", Gdx.graphics.getWidth()/2f-150, Gdx.graphics.getHeight()/2f);
             batch.end();
+
+            if (Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.SPACE)) {
+                create();
+                gameStarted = false;
+            }
             return;
         }
 
