@@ -1,3 +1,8 @@
+Pour démarrer lancer le jeu : ./gradlew run
+Pour Faire les test : ./gradlew :core:test --info
+
+Jeu en Java Dans l'objectif de monter en compétence et de mieux comprendre la logique de ce langage? j'envisages des améliorations SI possible  
+
 # tutorial
 
 A [libGDX](https://libgdx.com/) Project generated with [gdx-liftoff](https://github.com/libgdx/gdx-liftoff).
