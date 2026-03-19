@@ -2,7 +2,7 @@ package io.github.some_example_name;
 
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
-
+//test unitaire pour la class balle
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class BallTest{
 
